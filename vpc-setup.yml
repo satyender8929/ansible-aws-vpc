@@ -117,7 +117,7 @@
             wait: yes
             region: "{{region}}"
             if_exist-do-not-create: true
-        register: NATGW
+        register: NATGW_out
       
       - name: Set up public subnet route table 
         ec2_vpc_route_table: 
