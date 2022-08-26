@@ -33,10 +33,6 @@
         ec2_vpc_subnet:
             vpc_id: "{{vpcout.vpc.id}}"
             region: "{{ region }}"
-            
-            
-            
-            
             az: "{{Zone2}}"
             state: "{{state}}"
             cidr: "{{ PubSub2Cidr }}"
@@ -109,9 +105,6 @@
               - "{{pubsub1_out.subnet.id}}"
               - "{{pubsub2_out.subnet.id}}"
               - "{{pubsub3_out.subnet.id}}"
-         #    - "{{privsub1_out.subnet.id}}"
-         #    - "{{privsub2_out.subnet.id}}"
-         #    - "{{privsub3_out.subnet.id}}"
             routes:
              - dest: 0.0.0.0/0
                gateway_id: "{{igw_out.gateway_id}}"
@@ -133,9 +126,6 @@
             tags: 
               Name: VProfile-PrivRT
             subnets:
-           #  - "{{pubsub1_out.subnet.id}}"
-          #   - "{{pubsub2_out.subnet.id}}"
-          #  - "{{pubsub3_out.subnet.id}}"
              - "{{privsub1_out.subnet.id}}"
              - "{{privsub2_out.subnet.id}}"
              - "{{privsub3_out.subnet.id}}"
@@ -143,7 +133,18 @@
              - dest: 0.0.0.0/0
                gateway_id: "{{NATGW_out.nat_gateway_id}}"
         register: privRT_out
-    
-              
-              
- 
+        
+      - debug:
+          var: "{{item}}"
+        loop:
+          - vpcout.vpc.id
+          - pubsub1_out.subnet.id
+          - pubsub2_out.subnet.id
+          - pubsub3_out.subnet.id
+          - privsub1_out.subnet.id
+          - privsub2_out.subnet.id
+          - privsub3_out.subnet.id   
+          - igw_out.gateway_id
+          - pubRT_out.route_table.id    
+          - NATGW_out.nat_gateway_id
+          - privRT_out.route_table.id
